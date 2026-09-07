@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Welcome -->
+<div class="mb-4">
+    <p class="text-secondary mb-1">Good Morning 👋</p>
+    <h1 id="techName" class="fw-bold">Welcome, Priya Singh</h1>
+</div>
+
+<!-- KPI Cards -->
+<div class="stats">
+
+    <div class="stat-card primary">
+        <div class="stat-title">Assigned</div>
+        <div class="stat-value" id="assignedCount">0</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">In Progress</div>
+        <div class="stat-value" id="progressCount">0</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">Resolved</div>
+        <div class="stat-value" id="resolvedCount">0</div>
+    </div>
+</div>
+
+<!-- Ticket Table -->
+<div class="ticket-card">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Recent Assigned Tickets</h4>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Subject</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody id="ticketRows"></tbody>
+
+        </table>
+    </div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="techModalEl">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <form id="techForm">
+
+        <div class="modal-header">
+          <h5>Technician</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <input type="hidden" name="id">
+
+          <label class="form-label">Full name *</label>
+          <input class="form-control mb-2" name="full_name" required>
+
+          <label class="form-label">Username *</label>
+          <input class="form-control mb-2" name="username" required>
+
+          <label class="form-label">Email *</label>
+          <input type="email" class="form-control mb-2" name="email" required>
+
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control mb-2" name="password">
+
+          <label class="form-label">Phone</label>
+          <input class="form-control mb-2" name="phone">
+
+          <label class="form-label">Department</label>
+          <input class="form-control mb-2" name="department">
+
+          <label class="form-label">Skills</label>
+          <input class="form-control mb-2" name="skills">
+
+          <label class="form-label">Status</label>
+          <select class="form-select" name="status">
+            <option>active</option>
+            <option>inactive</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary">Save</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+ <!-- Premium Ticket Modal -->
+<div class="modal fade" id="ticketModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-header border-0 pb-0">
+        <div>
+          <h4 class="fw-bold mb-1">Ticket Details</h4>
+          <small class="text-secondary">
+            Review and update ticket status
+          </small>
+        </div>
+
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body pt-3">
+
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <label class="form-label">Ticket Number</label>
+            <input id="mTicket" class="form-control" readonly>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Priority</label>
+            <input id="mPriority" class="form-control" readonly>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Subject</label>
+            <input id="mSubject" class="form-control" readonly>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Description</label>
+            <textarea id="mDescription"
+                      class="form-control"
+                      rows="5"
+                      readonly></textarea>
+          </div>
+
+          <div class="col-md-6">
+    <label class="form-label">Status</label>
+
+    <select id="mStatus" class="form-select">
+        <option>Assigned</option>
+        <option>In Progress</option>
+        <option>Resolved</option>
+    </select>
+</div>
+<div class="col-12">
+    <label class="form-label">Resolution Notes</label>
+
+    <textarea
+        id="mResolution"
+        class="form-control"
+        rows="3"
+        placeholder="Describe how the issue was resolved..."></textarea>
+</div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer border-0 pt-0">
+
+        <button class="btn btn-light"
+                data-bs-dismiss="modal">
+          Close
+        </button>
+
+        <button class="btn btn-primary px-4"
+                id="saveStatusBtn">
+          Save Changes
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/technicians.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends 'base.html' %}{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h3 class="mb-1">Tickets</h3>
+    <div class="text-muted">Search, filter and manage support requests</div>
+  </div>
+  <button class="btn btn-primary" onclick="openCreateTicket()">
+    + Create Ticket
+  </button>
+</div>
+<div class="card p-3 mb-3">
+  <div class="row g-2">
+    <div class="col-md-3">
+      <input
+        id="search"
+        class="form-control"
+        placeholder="Search ticket, subject, customer"
+      />
+    </div>
+    <div class="col-md-2">
+      <select id="status" class="form-select">
+        <option value="">All statuses</option>
+        <option>Open</option>
+        <option>Assigned</option>
+        <option>In Progress</option>
+        <option>Waiting for Customer</option>
+        <option>Resolved</option>
+        <option>Closed</option>
+        <option>Reopened</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select id="priority" class="form-select">
+        <option value="">All priorities</option>
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+        <option>Critical</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select id="category" class="form-select">
+        <option value="">All categories</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select id="technician" class="form-select">
+        <option value="">All technicians</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <button class="btn btn-outline-secondary w-100" onclick="loadTickets()">
+        Go
+      </button>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table align-middle mb-0">
+      <thead>
+        <tr>
+          <th>Ticket</th>
+          <th>Customer</th>
+          <th>Subject</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Technician</th>
+          <th>Created</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="ticketRows"></tbody>
+    </table>
+  </div>
+  <div class="p-3 d-flex justify-content-between">
+    <span id="ticketMeta" class="text-muted"></span>
+    <div id="pagination"></div>
+  </div>
+</div>
+<div class="modal fade" id="ticketModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form id="ticketForm">
+        <div class="modal-header">
+          <h5>Create Ticket</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="ticketFormAlert"></div>
+          <div id="adminCustomerField" class="mb-3">
+            <label class="form-label">Customer *</label
+            ><select
+              id="customer_id"
+              name="customer_id"
+              class="form-select"
+            ></select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Subject *</label
+            ><input name="subject" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description *</label
+            ><textarea
+              name="description"
+              rows="5"
+              class="form-control"
+              required
+            ></textarea>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Category *</label
+              ><select
+                name="category_id"
+                id="ticket_category"
+                class="form-select"
+                required
+              ></select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Priority *</label
+              ><select name="priority" class="form-select">
+                <option>Low</option>
+                <option selected>Medium</option>
+                <option>High</option>
+                <option>Critical</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-3">
+            <label class="form-label">Attachment</label
+            ><input type="file" name="attachment" class="form-control" />
+            <div class="form-text">
+              Supported: images, PDF, Office/text files, ZIP. Max 10 MB.
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel</button
+          ><button class="btn btn-primary">Submit Ticket</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}{% block scripts %}
+<script src="{{ url_for('static',filename='js/tickets.js') }}"></script>
+{% endblock %}

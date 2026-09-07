@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="mb-4">
+    <p class="text-secondary mb-1">Welcome back 👋</p>
+    <h1 id="customerName" class="fw-bold">Customer Portal</h1>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+    <div class="stat-card primary">
+        <div class="stat-title">Total Tickets</div>
+        <div class="stat-value" id="totalCount">0</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">In Progress</div>
+        <div class="stat-value" id="progressCount">0</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">Resolved</div>
+        <div class="stat-value" id="resolvedCount">0</div>
+    </div>
+</div>
+
+<!-- Raise Ticket -->
+<div class="ticket-card mt-4">
+    <h4 class="mb-3">Raise New Ticket</h4>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <input id="subject" class="form-control" placeholder="Subject">
+        </div>
+
+        <div class="col-md-3">
+            <select id="priority" class="form-select">
+                <option>Low</option>
+                <option selected>Medium</option>
+                <option>High</option>
+            </select>
+        </div>
+
+        <div class="col-12">
+            <textarea id="description" class="form-control" rows="3"
+                placeholder="Describe your issue"></textarea>
+        </div>
+
+        <div class="col-12 text-end">
+            <button class="btn btn-primary" onclick="raiseTicket()">
+                Raise Ticket
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Ticket Cards -->
+<div class="ticket-card mt-4">
+    <h4 class="mb-3">My Tickets</h4>
+    <div id="ticketCards"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ticketModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5>Ticket Details</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <label>Ticket</label>
+        <input id="vTicket" class="form-control mb-2" readonly>
+
+        <label>Subject</label>
+        <input id="vSubject" class="form-control mb-2" readonly>
+
+        <label>Status</label>
+        <input id="vStatus" class="form-control mb-2" readonly>
+
+        <label>Technician</label>
+        <input id="vTech" class="form-control mb-2" readonly>
+
+        <label>Resolution Notes</label>
+        <textarea id="vNotes" rows="4" class="form-control" readonly></textarea>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById("pageTitle").innerText = "Customer Portal";
+</script>
+<script src="{{ url_for('static', filename='js/customer.js') }}"></script>
+{% endblock %}
+
+

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+
+    <h2>IT Support</h2>
+
+    <div class="menu active">Dashboard</div>
+    <div class="menu">Tickets</div>
+    <div class="menu">Reports</div>
+    <div class="menu">Settings</div>
+
+    <button id="logoutBtn" class="logout">
+      Logout
+    </button>
+
+  </aside>
+
+  <main class="dashboard">
+  <!-- Create Ticket -->
+  <div class="ticket-card">
+    <h3>Create New Ticket</h3>
+
+    <input type="text" id="subject" placeholder="Subject">
+
+    <select id="category">
+      <option value="1">Hardware</option>
+      <option value="2">Software</option>
+      <option value="3">Network</option>
+      <option value="4">Printer</option>
+      <option value="5">Email</option>
+      <option value="6">Server</option>
+      <option value="7">Security</option>
+      <option value="8">Internet</option>
+      <option value="9">Other</option>
+    </select>
+
+    <select id="priority">
+      <option value="Low">Low</option>
+      <option value="Medium" selected>Medium</option>
+      <option value="High">High</option>
+      <option value="Critical">Critical</option>
+    </select>
+
+    <textarea id="description" placeholder="Describe your issue"></textarea>
+
+    <button id="createBtn">Raise Ticket</button>
+
+    <p id="ticketMsg"></p>
+  </div>
+
+  <!-- My Tickets -->
+  <div class="list-card">
+    <h3>My Tickets</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Ticket</th>
+          <th>Subject</th>
+          <th>Status</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+
+      <tbody id="ticketTable"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+    window.location.href = "login.html";
+}
+
+document.getElementById("name").innerText = `Welcome, ${user.full_name}`;
+document.getElementById("role").innerText = `Role: ${user.role}`;
+
+document.getElementById("logoutBtn").onclick = () => {
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
+};
+
+async function loadTickets() {
+    const res = await fetch(`http://127.0.0.1:5050/mytickets/${user.id}`);
+    const tickets = await res.json();
+
+    const table = document.getElementById("ticketTable");
+    table.innerHTML = "";
+
+    tickets.forEach(ticket => {
+        table.innerHTML += `
+        <tr>
+            <td>${ticket.ticket_number}</td>
+            <td>${ticket.subject}</td>
+            <td>${ticket.status}</td>
+            <td>${ticket.priority}</td>
+        </tr>`;
+    });
+}
+
+document.getElementById("createBtn").onclick = async () => {
+
+    const res = await fetch("http://127.0.0.1:5050/tickets", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            customer_id: user.id,
+            subject: document.getElementById("subject").value,
+            description: document.getElementById("description").value,
+            category_id: Number(document.getElementById("category").value),
+            priority: document.getElementById("priority").value
+        })
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+        document.getElementById("ticketMsg").innerText =
+            `Ticket Created: ${result.ticket_number}`;
+
+        loadTickets();
+    }
+};
+
+loadTickets();
+</script>

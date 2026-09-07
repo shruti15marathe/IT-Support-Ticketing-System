@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <div>
+    <h3>Notifications</h3>
+    <p class="text-muted">System activity and ticket alerts.</p>
+  </div>
+  <button class="btn btn-outline-primary" onclick="markAllRead()">
+    Mark all read
+  </button>
+</div>
+<div id="notificationRows" class="vstack gap-2"></div>
+{% endblock %}{% block scripts %}
+<script src="{{ url_for('static',filename='js/notifications.js') }}"></script>
+{% endblock %}

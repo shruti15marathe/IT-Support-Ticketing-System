@@ -1,0 +1,456 @@
+/* ========= GOOGLE FONT ========= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+    --navy:#071B44;
+    --blue:#2563EB;
+    --bg:#EEF3F8;
+    --card:#FFFFFF;
+    --text:#111827;
+    --muted:#64748B;
+    --border:#E5E7EB;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+}
+
+/* ===== Layout ===== */
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:250px;
+    background:var(--navy);
+    color:white;
+    padding:28px 20px;
+}
+
+.brand{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:40px;
+}
+
+.sidebar-nav a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#C7D2FE;
+    text-decoration:none;
+    padding:14px 16px;
+    border-radius:12px;
+    margin-bottom:10px;
+    transition:.25s;
+}
+
+.sidebar-nav a:hover{
+    background:#17306B;
+    color:white;
+}
+
+.main-content{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+.topbar{
+    background:white;
+    height:85px;
+    padding:20px 32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--border);
+}
+
+.page-body{
+    padding:30px;
+}
+
+/* ===== Cards ===== */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:25px 0;
+}
+
+.stat-card{
+    background:white;
+    border-radius:18px;
+    padding:22px;
+}
+
+.stat-card.primary{
+    background:var(--blue);
+    color:white;
+}
+
+.stat-title{
+    font-size:14px;
+    color:var(--muted);
+}
+
+.primary .stat-title{
+    color:#DBEAFE;
+}
+
+.stat-value{
+    font-size:34px;
+    font-weight:700;
+    margin-top:10px;
+}
+
+/* ===== Table ===== */
+
+.ticket-card{
+    background:white;
+    border-radius:18px;
+    padding:24px;
+}
+
+.table{
+    margin-top:15px;
+}
+
+.table th{
+    color:var(--muted);
+    font-weight:600;
+    border:none;
+}
+
+.table td{
+    padding:16px 8px;
+    border-top:1px solid #F1F5F9;
+    vertical-align:middle;
+}
+
+/* ===== Badges ===== */
+
+.badge-status{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:110px;
+    padding:8px 14px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:600;
+    white-space:nowrap;
+}
+
+.assigned{
+    background:#DBEAFE;
+    color:#1D4ED8;
+}
+
+.progress{
+    background:#FDE68A;
+    color:#92400E;
+}
+
+.resolved{
+    background:#D1FAE5;
+    color:#047857;
+}
+
+.btn-view{
+    background:#2563EB;
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+    border-radius:10px;
+    font-weight:600;
+    transition:.25s;
+}
+
+.btn-view:hover{
+    background:#1D4ED8;
+    transform:translateY(-1px);
+}
+
+/* ================= LOGIN PAGE ================= */
+
+.container{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#071B44,#1E40AF);
+}
+
+.login-card{
+    width:420px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:24px;
+    padding:40px 32px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.logo{
+    font-size:48px;
+    text-align:center;
+    margin-bottom:12px;
+}
+
+.login-card h1{
+    color:#fff;
+    text-align:center;
+    font-weight:700;
+    margin-bottom:4px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#CBD5E1;
+    margin-bottom:28px;
+}
+
+.input-group{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:18px;
+}
+
+.input-group label{
+    color:#E2E8F0;
+    margin-bottom:8px;
+    font-size:14px;
+    font-weight:500;
+}
+
+.input-group input{
+    height:50px;
+    border:none;
+    border-radius:12px;
+    padding:0 16px;
+    background:rgba(255,255,255,.12);
+    color:#fff;
+    outline:none;
+}
+
+.input-group input::placeholder{
+    color:#CBD5E1;
+}
+
+.login-btn{
+    width:100%;
+    height:50px;
+    border:none;
+    border-radius:12px;
+    background:#2563EB;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.login-btn:hover{
+    background:#1D4ED8;
+}
+
+#message{
+    text-align:center;
+    margin-top:14px;
+    color:#fff;
+    font-size:14px;
+}
+.modal-content{
+    border:none;
+    border-radius:20px;
+}
+
+.modal-header{
+    border-bottom:1px solid #E5E7EB;
+    padding:20px 24px;
+}
+
+.modal-body{
+    padding:24px;
+}
+
+.modal-footer{
+    border-top:1px solid #E5E7EB;
+    padding:18px 24px;
+}
+
+.form-control,.form-select{
+    border-radius:12px;
+    height:48px;
+}
+/* ===== Priority Badge ===== */
+
+.priority-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:90px;
+    padding:8px 14px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.low{
+    background:#D1FAE5;
+    color:#047857;
+}
+
+.medium{
+    background:#FDE68A;
+    color:#92400E;
+}
+
+.high{
+    background:#FECACA;
+    color:#B91C1C;
+}
+
+.critical{
+    background:#DC2626;
+    color:#FFFFFF;
+}
+/* ===== Premium Modal ===== */
+
+.modal-content{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.modal-header{
+    padding:24px 24px 10px;
+}
+
+.modal-body{
+    padding:0 24px 24px;
+}
+
+.modal-footer{
+    padding:0 24px 24px;
+}
+
+.form-control,
+.form-select{
+    height:50px;
+    border-radius:12px;
+    border:1px solid #E5E7EB;
+}
+
+textarea.form-control{
+    height:auto;
+    resize:none;
+}
+/* ===== Admin Table ===== */
+
+.ticket-card{
+    border-radius:22px;
+    box-shadow:0 8px 30px rgba(15,23,42,.06);
+}
+
+.table thead th{
+    font-size:13px;
+    color:#64748B;
+    font-weight:600;
+    border:none;
+    padding-bottom:16px;
+}
+
+.table tbody td{
+    padding:18px 8px;
+    vertical-align:middle;
+}
+
+.form-select-sm{
+    border-radius:10px;
+    border:1px solid #E5E7EB;
+}
+
+.btn-sm{
+    border-radius:10px;
+    padding:6px 14px;
+}
+.chart-bar{
+    height:18px;
+    border-radius:20px;
+    background:#E5E7EB;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.chart-fill{
+    height:100%;
+    border-radius:20px;
+    transition:.4s;
+}
+
+.blue{background:#2563EB;}
+.yellow{background:#F59E0B;}
+.green{background:#10B981;}
+#chartArea{
+    max-width:100%;
+    padding:10px;
+}
+.summary-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid #EEF2F7;
+}
+
+.summary-item:last-child{
+    border:none;
+}
+
+/* Summary */
+.summary-item{
+  display:flex;
+  justify-content:space-between;
+  padding:14px 0;
+  border-bottom:1px solid #EEF2F7;
+}
+.summary-item:last-child{border:0;}
+
+/* Cards */
+.ticket-card{
+  background:#fff;
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 8px 24px rgba(15,23,42,.05);
+}
+.stat-card:hover{transform:translateY(-3px);}
+
+/* Pills */
+.priority-badge,.badge-status{
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.low{background:#DCFCE7;color:#15803D;}
+.medium{background:#FEF3C7;color:#B45309;}
+.high{background:#FEE2E2;color:#B91C1C;}
+.critical{background:#7F1D1D;color:#fff;}
+
+.assigned{background:#DBEAFE;color:#1D4ED8;}
+.progress{background:#FDE68A;color:#92400E;}
+.resolved{background:#D1FAE5;color:#047857;}
