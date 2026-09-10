@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-header">
+<div>
+<span class="eyebrow">ADMIN REPORTS</span>
+<h1>Analytics Dashboard</h1>
+<p>Overall ticket statistics and technician workload.</p>
+</div>
+</div>
+
+<div class="customer-stats">
+<div class="customer-stat-card">
+<div class="stat-icon total-icon">📋</div>
+<div><p>Total</p><h2 id="totalCount">0</h2></div>
+</div>
+
+<div class="customer-stat-card">
+<div class="stat-icon progress-icon">🟢</div>
+<div><p>Open</p><h2 id="openCount">0</h2></div>
+</div>
+
+<div class="customer-stat-card">
+<div class="stat-icon progress-icon">🟠</div>
+<div><p>In Progress</p><h2 id="progressCount">0</h2></div>
+</div>
+
+<div class="customer-stat-card">
+<div class="stat-icon resolved-icon">✓</div>
+<div><p>Resolved</p><h2 id="resolvedCount">0</h2></div>
+</div>
+</div>
+
+<div class="row g-4 mt-2">
+<div class="col-md-6">
+<div class="admin-panel">
+<h5 class="mb-3">Priority Distribution</h5>
+<div id="priorityChart"></div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="admin-panel">
+<h5 class="mb-3">Technician Workload</h5>
+<div id="techChart"></div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static',filename='js/admin_reports.js') }}"></script>
+{% endblock %}

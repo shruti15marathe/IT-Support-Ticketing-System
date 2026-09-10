@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="admin-header">
+    <div>
+        <span class="eyebrow">TICKET DETAILS</span>
+        <h1 id="ticketNo">Loading...</h1>
+        <p id="ticketSubject"></p>
+    </div>
+    <button class="btn btn-outline-secondary" onclick="history.back()">← Back</button>
+</div>
+
+<div class="admin-grid">
+    <div class="admin-panel">
+        <div class="panel-title">
+            <h3>Ticket Information</h3>
+        </div>
+
+        <div class="mb-3">
+            <small class="text-secondary">Status</small>
+            <h5 id="ticketStatus"></h5>
+        </div>
+
+        <div class="mb-3">
+            <small class="text-secondary">Priority</small>
+            <h5 id="ticketPriority"></h5>
+        </div>
+
+        <div class="mb-3">
+            <small class="text-secondary">Assigned Technician</small>
+            <h5 id="ticketTech">Unassigned</h5>
+        </div>
+    </div>
+
+    <div class="admin-panel">
+        <div class="panel-title">
+            <h3>SLA</h3>
+        </div>
+
+        <div class="mb-3">
+            <small class="text-secondary">Response Due</small>
+            <h5 id="responseDue"></h5>
+        </div>
+
+        <div>
+            <small class="text-secondary">Resolution Due</small>
+            <h5 id="resolutionDue"></h5>
+        </div>
+    </div>
+</div>
+
+<div class="admin-panel">
+    <div class="panel-title">
+        <h3>Description</h3>
+    </div>
+    <p id="ticketDescription"></p>
+</div>
+
+<div class="admin-panel">
+    <div class="panel-title">
+        <h3>Activity Timeline</h3>
+    </div>
+
+    <div id="commentList" class="mb-3">
+        <p class="text-secondary">Loading comments...</p>
+    </div>
+
+    <div class="d-flex gap-2 mt-3">
+    <input
+        type="text"
+        id="newComment"
+        class="form-control"
+        placeholder="Write an internal comment...">
+
+    
+        <button
+            id="sendCommentBtn"
+            class="btn btn-primary">
+            Send
+        </button>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static',filename='js/ticket_details.js') }}"></script>
+{% endblock %}

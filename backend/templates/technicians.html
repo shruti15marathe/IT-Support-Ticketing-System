@@ -9,34 +9,47 @@
 </div>
 
 <!-- KPI Cards -->
-<div class="stats">
+<div class="customer-stats">
 
-    <div class="stat-card primary">
-        <div class="stat-title">Assigned</div>
-        <div class="stat-value" id="assignedCount">0</div>
+    <div class="customer-stat-card">
+        <div class="stat-icon total-icon">📋</div>
+        <div>
+            <p>Assigned</p>
+            <h2 id="assignedCount">0</h2>
+        </div>
     </div>
 
-    <div class="stat-card">
-        <div class="stat-title">In Progress</div>
-        <div class="stat-value" id="progressCount">0</div>
+    <div class="customer-stat-card">
+        <div class="stat-icon progress-icon">◔</div>
+        <div>
+            <p>In Progress</p>
+            <h2 id="progressCount">0</h2>
+        </div>
     </div>
 
-    <div class="stat-card">
-        <div class="stat-title">Resolved</div>
-        <div class="stat-value" id="resolvedCount">0</div>
+    <div class="customer-stat-card">
+        <div class="stat-icon resolved-icon">✓</div>
+        <div>
+            <p>Resolved</p>
+            <h2 id="resolvedCount">0</h2>
+        </div>
     </div>
+
 </div>
 
 <!-- Ticket Table -->
-<div class="ticket-card">
+<div class="customer-panel">
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Recent Assigned Tickets</h4>
+    <div class="panel-heading">
+        <div>
+            <span class="section-label">WORK QUEUE</span>
+            <h3>Recent Assigned Tickets</h3>
+            <p>Tickets currently assigned to you.</p>
+        </div>
     </div>
 
     <div class="table-responsive">
-        <table class="table">
-
+        <table class="table align-middle mb-0">
             <thead>
                 <tr>
                     <th>Ticket</th>
@@ -46,13 +59,14 @@
                     <th></th>
                 </tr>
             </thead>
-
             <tbody id="ticketRows"></tbody>
-
         </table>
     </div>
 
 </div>
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="techModalEl">
   <div class="modal-dialog">

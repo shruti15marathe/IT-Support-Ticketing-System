@@ -2,81 +2,118 @@
 
 {% block content %}
 
-<!-- Welcome -->
-<div class="mb-4">
-    <p class="text-secondary mb-1">Welcome back 👋</p>
-    <h1 class="fw-bold">Admin Dashboard</h1>
+<!-- Header -->
+<div class="admin-header">
+    <div>
+        <span class="eyebrow">ADMIN PORTAL</span>
+        <h1>Admin Dashboard</h1>
+        <p>Monitor support activity and manage your IT service desk.</p>
+    </div>
+
+    <div class="admin-actions">
+        <button class="admin-action-btn">↻ Refresh</button>
+    </div>
 </div>
 
 <!-- KPI Cards -->
-<div class="stats">
+<div class="admin-kpis">
 
-    <div class="stat-card primary">
-        <div class="stat-title">Open Tickets</div>
-        <div class="stat-value" id="openCount">0</div>
+    <div class="admin-kpi">
+        <div class="kpi-icon blue">🎫</div>
+        <div>
+            <span>Open Tickets</span>
+            <strong id="openCount">0</strong>
+        </div>
     </div>
 
-    <div class="stat-card">
-        <div class="stat-title">Technicians</div>
-        <div class="stat-value" id="techCount">0</div>
+    <div class="admin-kpi">
+        <div class="kpi-icon purple">👨‍💻</div>
+        <div>
+            <span>Technicians</span>
+            <strong id="techCount">0</strong>
+        </div>
     </div>
 
-    <div class="stat-card">
-        <div class="stat-title">High Priority</div>
-        <div class="stat-value" id="highCount">0</div>
+    <div class="admin-kpi">
+        <div class="kpi-icon orange">⚡</div>
+        <div>
+            <span>High Priority</span>
+            <strong id="highCount">0</strong>
+        </div>
     </div>
 
 </div>
 
 <!-- Analytics -->
-<div class="row g-4 mt-1">
+<div class="admin-grid">
 
-    <!-- Chart -->
-    <div class="col-lg-8">
-        <div class="ticket-card h-100">
-            <div class="d-flex justify-content-between mb-3">
-                <h4>Ticket Analytics</h4>
-                <small class="text-secondary">Last Updated</small>
+    <div class="admin-panel analytics-panel">
+
+        <div class="panel-title">
+            <div>
+                <span class="section-label">OVERVIEW</span>
+                <h3>Ticket Analytics</h3>
             </div>
-
-            <div id="chartArea" style="height:300px;"></div>
+            <span class="panel-note">Current status</span>
         </div>
+
+        <div id="chartArea"></div>
+
     </div>
 
-    <!-- Summary -->
-    <div class="col-lg-4">
-        <div class="ticket-card h-100">
+    <div class="admin-panel summary-panel">
 
-            <h5 class="mb-3">Today's Summary</h5>
-
-            <div class="summary-item">
-                <span>🟡 In Progress</span>
-                <strong id="progressSummary">0</strong>
+        <div class="panel-title">
+            <div>
+                <span class="section-label">TODAY</span>
+                <h3>Ticket Summary</h3>
             </div>
-
-            <div class="summary-item">
-                <span>🟢 Resolved</span>
-                <strong id="resolvedSummary">0</strong>
-            </div>
-
-            <div class="summary-item">
-                <span>🔵 Assigned</span>
-                <strong id="assignedSummary">0</strong>
-            </div>
-
         </div>
+
+        <div class="summary-row">
+            <div class="summary-left">
+                <span class="summary-dot yellow"></span>
+                <span>In Progress</span>
+            </div>
+            <strong id="progressSummary">0</strong>
+        </div>
+
+        <div class="summary-row">
+            <div class="summary-left">
+                <span class="summary-dot green"></span>
+                <span>Resolved</span>
+            </div>
+            <strong id="resolvedSummary">0</strong>
+        </div>
+
+        <div class="summary-row">
+            <div class="summary-left">
+                <span class="summary-dot blue"></span>
+                <span>Assigned</span>
+            </div>
+            <strong id="assignedSummary">0</strong>
+        </div>
+
     </div>
 
 </div>
-<!-- Recent Tickets -->
-<div class="ticket-card mt-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Recent Tickets</h4>
+<!-- Ticket Queue -->
+<div class="admin-panel ticket-queue">
+
+    <div class="panel-title">
+        <div>
+            <span class="section-label">WORK QUEUE</span>
+            <h3>Recent Tickets</h3>
+            <p>Latest support requests across the system.</p>
+        </div>
+
+        <span class="ticket-count">Live Queue</span>
     </div>
 
     <div class="table-responsive">
-        <table class="table">
+
+        <table class="table admin-table align-middle mb-0">
 
             <thead>
                 <tr>
@@ -92,6 +129,7 @@
             <tbody id="adminTicketRows"></tbody>
 
         </table>
+
     </div>
 
 </div>

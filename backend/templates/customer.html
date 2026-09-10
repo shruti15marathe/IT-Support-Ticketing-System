@@ -8,20 +8,20 @@
 </div>
 
 <!-- Stats -->
-<div class="stats">
-    <div class="stat-card primary">
-        <div class="stat-title">Total Tickets</div>
-        <div class="stat-value" id="totalCount">0</div>
+<div class="customer-stats">
+    <div class="customer-stat-card">
+        <div class="stat-icon total-icon">🎫</div>
+        <div><p>Total Tickets</p><h2 id="totalCount">0</h2></div>
     </div>
 
-    <div class="stat-card">
-        <div class="stat-title">In Progress</div>
-        <div class="stat-value" id="progressCount">0</div>
+    <div class="customer-stat-card">
+        <div class="stat-icon progress-icon">◔</div>
+        <div><p>In Progress</p><h2 id="progressCount">0</h2></div>
     </div>
 
-    <div class="stat-card">
-        <div class="stat-title">Resolved</div>
-        <div class="stat-value" id="resolvedCount">0</div>
+    <div class="customer-stat-card">
+        <div class="stat-icon resolved-icon">✓</div>
+        <div><p>Resolved</p><h2 id="resolvedCount">0</h2></div>
     </div>
 </div>
 
@@ -47,11 +47,11 @@
                 placeholder="Describe your issue"></textarea>
         </div>
 
-        <div class="col-12 text-end">
-            <button class="btn btn-primary" onclick="raiseTicket()">
-                Raise Ticket
-            </button>
-        </div>
+     <div class="col-12 text-end">
+    <button class="btn btn-primary submit-ticket-btn" onclick="raiseTicket()">
+        Raise Ticket
+    </button>
+</div>
     </div>
 </div>
 

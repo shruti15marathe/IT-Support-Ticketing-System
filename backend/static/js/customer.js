@@ -1,114 +1,274 @@
-const user = JSON.parse(localStorage.getItem("user"));
+if (window.customerLoaded) {
+    console.log("customer.js already loaded");
+} else {
+    window.customerLoaded = true;
 
-if (!user || user.role !== "customer") {
-    window.location.href = "/login";
-}
+    const user = JSON.parse(localStorage.getItem("user"));
 
-document.getElementById("customerName").innerText = user.full_name;
+    if (!user || user.role !== "customer") {
+        window.location.href = "/login";
+    } else {
 
-const ticketModal = new bootstrap.Modal(
-    document.getElementById("ticketModal")
-);
+        document.getElementById("customerName").innerText =
+            `Welcome back, ${user.full_name} 👋`;
 
-// Load Customer Tickets
-async function loadCustomerTickets() {
+        const ticketModal = new bootstrap.Modal(
+            document.getElementById("ticketModal")
+        );
 
-    const response = await fetch(`/customer/tickets/${user.id}`);
-    const tickets = await response.json();
+       function formatDate(value) {
+    if (!value) return "Not set";
 
-    document.getElementById("totalCount").innerText = tickets.length;
-    document.getElementById("progressCount").innerText =
-        tickets.filter(t => t.status === "In Progress").length;
-    document.getElementById("resolvedCount").innerText =
-        tickets.filter(t => t.status === "Resolved").length;
+    const date = new Date(value);
 
-    const container = document.getElementById("ticketCards");
-    container.innerHTML = "";
-
-    tickets.forEach(ticket => {
-
-        let badge = "assigned";
-        if (ticket.status === "In Progress") badge = "progress";
-        if (ticket.status === "Resolved") badge = "resolved";
-
-        container.innerHTML += `
-        <div class="border rounded-4 p-3 mb-3">
-
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="fw-bold mb-0">${ticket.ticket_number}</h6>
-                <span class="badge-status ${badge}">
-                    ${ticket.status}
-                </span>
-            </div>
-
-            <h5 class="mb-1">${ticket.subject}</h5>
-
-            <p class="text-secondary small mb-3">
-                Assigned to: ${ticket.technician || "Not Assigned"}
-            </p>
-
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-primary btn-sm"
-                    onclick='openTicket(${JSON.stringify(ticket)})'>
-                    View Details
-                </button>
-            </div>
-
-        </div>`;
-    });
-}
-
-// View Ticket Modal
-function openTicket(ticket) {
-
-    document.getElementById("vTicket").value = ticket.ticket_number;
-    document.getElementById("vSubject").value = ticket.subject;
-    document.getElementById("vStatus").value = ticket.status;
-    document.getElementById("vTech").value =
-        ticket.technician || "Not Assigned";
-    document.getElementById("vNotes").value =
-        ticket.resolution_notes || "No resolution yet";
-
-    ticketModal.show();
-}
-
-// Raise New Ticket
-async function raiseTicket() {
-
-    const subject = document.getElementById("subject").value;
-    const description = document.getElementById("description").value;
-    const priority = document.getElementById("priority").value;
-
-    if (!subject || !description) {
-        alert("Please fill all fields");
-        return;
-    }
-
-    const response = await fetch("/customer/create-ticket", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            customer_id: user.id,
-            subject,
-            description,
-            priority
-        })
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const month = date.toLocaleString("en-IN", {
+        month: "short",
+        timeZone: "Asia/Kolkata"
     });
 
-    const result = await response.json();
+    let hours = date.getUTCHours();
+    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
 
-    if (result.success) {
+    const period = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
 
-        alert("Ticket Raised Successfully");
+    return `${month} ${day}, ${hours}:${minutes} ${period}`;
+}
 
-        document.getElementById("subject").value = "";
-        document.getElementById("description").value = "";
-        document.getElementById("priority").value = "Medium";
+        async function loadCustomerTickets() {
+            try {
+                const response = await fetch(
+                    `/customer/tickets/${user.id}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Failed to load tickets");
+                }
+
+                const tickets = await response.json();
+
+                document.getElementById("totalCount").innerText =
+                    tickets.length;
+
+                document.getElementById("progressCount").innerText =
+                    tickets.filter(
+                        t => t.status === "In Progress"
+                    ).length;
+
+                document.getElementById("resolvedCount").innerText =
+                    tickets.filter(
+                        t =>
+                            t.status === "Resolved" ||
+                            t.status === "Closed"
+                    ).length;
+
+                const container =
+                    document.getElementById("ticketCards");
+
+                container.innerHTML = "";
+
+                tickets.forEach(ticket => {
+
+                    let statusClass = "assigned";
+
+                    if (ticket.status === "Open")
+                        statusClass = "open";
+                    else if (ticket.status === "In Progress")
+                        statusClass = "progress";
+                    else if (
+                        ticket.status === "Resolved" ||
+                        ticket.status === "Closed"
+                    )
+                        statusClass = "resolved";
+
+                    let slaHTML = "";
+
+                    if (ticket.response_due_at) {
+                        slaHTML += `
+                            <span>
+                                Response due:
+                                <strong>
+                                    ${formatDate(ticket.response_due_at)}
+                                </strong>
+                            </span>
+                        `;
+                    }
+
+                    if (ticket.resolution_due_at) {
+                        slaHTML += `
+                            <span>
+                                Resolution due:
+                                <strong>
+                                    ${formatDate(ticket.resolution_due_at)}
+                                </strong>
+                            </span>
+                        `;
+                    }
+
+let slaStatus = "";
+
+if (ticket.resolution_due_at) {
+    const due = new Date(ticket.resolution_due_at);
+
+    slaStatus = due < new Date()
+        ? "🔴 Overdue"
+        : "🟢 On Track";
+}
+slaHTML += `
+    <span><strong>${slaStatus}</strong></span>
+`;
+
+                    container.innerHTML += `
+                        <div class="customer-ticket-card">
+
+                            <div class="ticket-main">
+
+                                <div class="ticket-top">
+                                    <span class="ticket-number">
+                                        ${ticket.ticket_number}
+                                    </span>
+
+                                    <span class="badge-status ${statusClass}">
+                                        ${ticket.status}
+                                    </span>
+                                </div>
+
+                                <h4 class="ticket-subject">
+                                    ${ticket.subject}
+                                </h4>
+
+                                <div class="ticket-meta">
+                                    Priority:
+                                    <strong>
+                                        ${ticket.priority || "Medium"}
+                                    </strong>
+
+                                    &nbsp; | &nbsp;
+
+                                    Technician:
+                                    <strong>
+                                        ${ticket.technician || "Not Assigned"}
+                                    </strong>
+                                </div>
+
+                                <div class="ticket-sla">
+                                    ${slaHTML}
+                                </div>
+
+                            </div>
+<button
+    class="btn btn-primary ticket-view-btn"
+    onclick="viewTicket('${ticket.ticket_number}')">
+    View Details →
+</button>
+
+                        </div>
+                    `;
+                });
+
+            } catch (error) {
+                console.error(error);
+
+                document.getElementById("ticketCards").innerHTML = `
+                    <div class="empty-tickets">
+                        <h5>Unable to load tickets</h5>
+                        <p>Please refresh and try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function openTicket(ticket) {
+
+            document.getElementById("vTicket").value =
+                ticket.ticket_number;
+
+            document.getElementById("vSubject").value =
+                ticket.subject;
+
+            document.getElementById("vStatus").value =
+                ticket.status;
+
+            document.getElementById("vTech").value =
+                ticket.technician || "Not Assigned";
+
+            document.getElementById("vNotes").value =
+                ticket.resolution_notes || "No resolution yet";
+
+            ticketModal.show();
+        }
+
+        async function raiseTicket() {
+
+            const subject =
+                document.getElementById("subject").value.trim();
+
+            const description =
+                document.getElementById("description").value.trim();
+
+            const priority =
+                document.getElementById("priority").value;
+
+            if (!subject || !description) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    "/customer/create-ticket",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            customer_id: user.id,
+                            subject,
+                            description,
+                            priority
+                        })
+                    }
+                );
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(
+                        result.message ||
+                        "Ticket creation failed"
+                    );
+                }
+
+                alert(
+                    `Ticket ${result.ticket_number} raised successfully`
+                );
+
+                document.getElementById("subject").value = "";
+                document.getElementById("description").value = "";
+                document.getElementById("priority").value = "Medium";
+
+                await loadCustomerTickets();
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Unable to raise ticket: " +
+                    error.message
+                );
+            }
+        }
+
+        window.raiseTicket = raiseTicket;
+        window.openTicket = openTicket;
 
         loadCustomerTickets();
     }
 }
-
-loadCustomerTickets();
+function viewTicket(ticketNumber){
+    window.location.href=`/ticket/view/${ticketNumber}`;
+}
