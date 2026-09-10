@@ -94,9 +94,5 @@
 
 {% endblock %}
 
-{% block scripts %}
-<script>
-document.getElementById("pageTitle").innerText = "Customer Portal";
-</script>
-<script src="{{ url_for('static', filename='js/customer.js') }}"></script>
-{% endblock %}
+Uncaught SyntaxError: Identifier 'user' has already been declared (at customer.js:1:1)
+favicon.ico:1  GET http://127.0.0.1:5050/favicon.ico 404 (NOT FOUND)
