@@ -26,7 +26,7 @@
         <header class="topbar">
 
             <div>
-                <h4 id="pageTitle" class="mb-0">Technician Dashboard</h4>
+                <h4 id="pageTitle" class="mb-0">Customer dashboard</h4>
                 <small class="text-secondary">IT Support Ticketing System</small>
             </div>
 
@@ -53,16 +53,17 @@
         id="notificationPanel"
         class="notification-panel">
 
-        <div class="notification-header">
-            <strong>Notifications</strong>
+      <div class="notification-header">
+    <strong>Notifications</strong>
 
-            <button
-                id="markAllReadBtn"
-                class="mark-all-btn"
-                type="button">
-                Mark all read
-            </button>
-        </div>
+    <div class="notification-actions">
+        <button id="markAllReadBtn" class="icon-btn" title="Mark all read">✓✓</button>
+
+        <button id="clearAllBtn" class="icon-btn" title="Clear all">🗑</button>
+
+        <button id="closeBtn" class="icon-btn" title="Close">✕</button>
+    </div>
+</div>
 
         <div id="notificationList">
             <div class="notification-empty">
@@ -74,7 +75,7 @@
 
 </div> 
 
-                <span id="userName" class="fw-semibold"></span>
+            <span id="userName" class="fw-semibold"></span>
 
                 <button class="btn btn-outline-danger btn-sm" onclick="logout()">
                     Logout

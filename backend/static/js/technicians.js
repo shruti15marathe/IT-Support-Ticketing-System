@@ -272,23 +272,27 @@ async function quickStatus(ticketNumber,status){
     }
 }
 
-document.getElementById("techSendComment").onclick=async()=>{
-    const comment=document.getElementById("techNewComment").value.trim();
-    if(!comment) return;
+const techSendBtn = document.getElementById("techSendComment");
 
-    const user=JSON.parse(localStorage.getItem("user"));
-    const ticket=document.getElementById("mTicket").value;
+if (techSendBtn) {
+    techSendBtn.onclick = async () => {
+        const comment = document.getElementById("techNewComment").value.trim();
+        if (!comment) return;
 
-    await fetch("/ticket/comments",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-            ticket_number:ticket,
-            user_id:user.id,
-            comment:comment
-        })
-    });
+        const user = JSON.parse(localStorage.getItem("user"));
+        const ticket = document.getElementById("mTicket").value;
 
-    document.getElementById("techNewComment").value="";
-    loadTechComments(ticket);
-};
+        await fetch("/ticket/comments", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                ticket_number: ticket,
+                user_id: user.id,
+                comment: comment
+            })
+        });
+
+        document.getElementById("techNewComment").value = "";
+        loadTechComments(ticket);
+    };
+}

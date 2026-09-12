@@ -1,14 +1,34 @@
-{% extends 'base.html' %}{% block content %}
-<div class="d-flex justify-content-between mb-3">
-  <div>
-    <h3>Notifications</h3>
-    <p class="text-muted">System activity and ticket alerts.</p>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm border-0">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+    <div>
+      <h4 class="mb-0 fw-bold">Notifications</h4>
+      <small class="text-muted">System activity & ticket alerts</small>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-light btn-sm" title="Mark all read" onclick="markAllRead()">
+        ✓✓
+      </button>
+
+      <button class="btn btn-light btn-sm" title="Clear all" onclick="clearAllNotifications()">
+        🗑
+      </button>
+
+      <button class="btn btn-light btn-sm" title="Close" onclick="window.history.back()">
+        ✕
+      </button>
+    </div>
   </div>
-  <button class="btn btn-outline-primary" onclick="markAllRead()">
-    Mark all read
-  </button>
+
+  <div class="card-body p-0">
+    <div id="notificationRows" class="notification-list"></div>
+  </div>
 </div>
-<div id="notificationRows" class="vstack gap-2"></div>
-{% endblock %}{% block scripts %}
-<script src="{{ url_for('static',filename='js/notifications.js') }}"></script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/notifications.js') }}"></script>
 {% endblock %}

@@ -19,6 +19,26 @@ if (!window.notificationsLoaded) {
     const markAllReadBtn =
         document.getElementById("markAllReadBtn");
 
+        const clearAllBtn = document.getElementById("clearAllBtn");
+const closeBtn = document.getElementById("closeBtn");
+
+// Close panel
+closeBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    notificationPanel.classList.remove("show");
+});
+
+// Clear all notifications
+clearAllBtn.addEventListener("click", async (e) => {
+    e.stopPropagation();
+
+    await fetch(`/notifications/${currentUser.id}/clear`, {
+        method: "DELETE"
+    });
+
+    await loadNotifications();
+});
+
     async function loadNotifications() {
         if (!currentUser) return;
 
@@ -157,6 +177,20 @@ if (!window.notificationsLoaded) {
         }
     });
 
+
+closeBtn.addEventListener("click",(e)=>{
+    e.stopPropagation();
+    notificationPanel.classList.remove("show");
+});
+
+clearAllBtn.addEventListener("click",async(e)=>{
+    e.stopPropagation();
+    await fetch(`/notifications/${currentUser.id}/clear`,{
+        method:"DELETE"
+    });
+    loadNotifications();
+});
+
     loadNotifications();
     setInterval(loadNotifications,5000);
-}
+} 

@@ -1,16 +1,11 @@
-// =========================
-// Logout
-// =========================
 
+// Logout
 function logout(){
     localStorage.removeItem("user");
     window.location.href="/logout";
 }
 
-// =========================
 // Logged-in User
-// =========================
-
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (!user) {
@@ -22,16 +17,22 @@ if (name) {
     name.innerText = user.full_name;
 }
 
-// =========================
+// Dashboard Title
+const pageTitle = document.getElementById("pageTitle");
+if (pageTitle) {
+    if (user.role === "admin") {
+        pageTitle.innerText = "Admin Dashboard";
+    } else if (user.role === "technician") {
+        pageTitle.innerText = "Technician Dashboard";
+    } else if (user.role === "customer") {
+        pageTitle.innerText = "Customer Dashboard";
+    }
+}
 // Sidebar Navigation
-// =========================
-
 const nav = document.getElementById("nav");
 
 if (nav) {
-
     let links = "";
-
     if (user.role === "admin") {
     links = `
         <a href="/admin" class="nav-link-item">
@@ -57,13 +58,11 @@ if (nav) {
     }
 
     else if (user.role === "customer") {
-
         links = `
             <a href="/customer" class="nav-link-item">
                 🎫 My Tickets
             </a>
         `;
-
     }
 
     nav.innerHTML = links;

@@ -2,13 +2,12 @@ from flask import Flask, jsonify, request, render_template, session, redirect
 from flask_cors import CORS
 from datetime import datetime, timedelta,timezone
 from functools import wraps
-import technician_bp
 import mysql.connector
 import os
 from config import Config
 
 app = Flask(__name__)
-app.register_blueprint(technician_bp)
+
 app.secret_key = "change-this-to-a-random-secret-key"
 CORS(app)
 
