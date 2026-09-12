@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, render_template, session, redirect
 from flask_cors import CORS
 from datetime import datetime, timedelta,timezone
 from functools import wraps
-from routes.technicians_routes import technician_bp
+import technician_bp
 import mysql.connector
 import os
 from config import Config
@@ -902,6 +902,23 @@ def mark_notification_read(notification_id):
     return jsonify({
         "success": True
     })
+
+@app.route("/notifications/<int:user_id>/clear", methods=["DELETE"])
+def clear_notifications(user_id):
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute(
+        "DELETE FROM notifications WHERE user_id=%s",
+        (user_id,)
+    )
+
+    db.commit()
+    cursor.close()
+    db.close()
+
+    return jsonify({"success": True})
+
 def check_sla_notifications():
     db = get_db()
     cursor = db.cursor(dictionary=True)
@@ -991,6 +1008,8 @@ def admin_users_page():
 def logout():
     session.clear()
     return redirect("/login")
+
+
 
 # ---------- Run Server ----------
 if __name__ == "__main__":
